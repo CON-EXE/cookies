@@ -66,15 +66,14 @@ function getHeight() {
 
 
 function checkCookies() {
-    log('cookies checked');
     if (document.cookie.length === 0) {
-        cookies.showModal();
+        setTimeout(() => {
+            cookies.showModal();
+        }, 3000);
+    } else {
+        showCookies();
     }
 }
-
-setTimeout(() => {
-    checkCookies();
-}, 3000);
 
 function createCookies() {
     if (cookieBrowser.checked) { setCookie('Browser', getBrowser()); }
@@ -119,14 +118,19 @@ function getCookie(name) {
     return null;
 }
 
+function showCookies() { // Only displays existing cookies in console
+    if(getCookie('Browser') !== null) { log(`Browser = ${getCookie('Browser')}`); }
+    if(getCookie('Operating System') !== null) { log(`Operating System = ${getCookie('Operating System')}`); }
+    if(getCookie('Screen Width') !== null) { log(`Screen Width = ${getCookie('Screen Width')}`); }
+    if(getCookie('Screen Height') !== null) { log(`Screen Height = ${getCookie('Screen Height')}`); }
+}
+
+checkCookies();
 
 listen('click', accept, () => {
     createCookies();
     cookies.close();
-    log(`1${getCookie('Browser')}`);
-    log(`2${getCookie('Operating System')}`);
-    log(`3${getCookie('Screen Width')}`);
-    log(`4${getCookie('Screen Height')}`);
+    showCookies();
 });
 
 listen('click', settings, () => {
@@ -137,9 +141,5 @@ listen('click', settings, () => {
 listen('click', save, () => {
     createCookies();
     settingsDialog.close();
-    log(`1${getCookie('Browser')}`);
-    log(`2${getCookie('Operating System')}`);
-    log(`3${getCookie('Screen Width')}`);
-    log(`4${getCookie('Screen Height')}`);
+    showCookies();
 });
-
