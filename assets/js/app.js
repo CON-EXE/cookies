@@ -109,10 +109,9 @@ function setCookie(name, value) {
 
 function getCookie(name) {
     const cookies = document.cookie.split(';');
-    for (let cookie of cookies) {
-        const [cookieName, cookieValue] = cookie.split('=').map(c => c.trim());
-
-        if (decodeURIComponent(cookieName === name)) {
+    for (let i = 0; i < cookies.length; i++) {
+        const [cookieName, cookieValue] = cookies[i].split('=').map(c => c.trim());
+        if (decodeURIComponent(cookieName) === decodeURIComponent(name)) {
             return decodeURIComponent(cookieValue);
         }
     }
@@ -124,6 +123,10 @@ function getCookie(name) {
 listen('click', accept, () => {
     createCookies();
     cookies.close();
+    log(`1${getCookie('Browser')}`);
+    log(`2${getCookie('Operating System')}`);
+    log(`3${getCookie('Screen Width')}`);
+    log(`4${getCookie('Screen Height')}`);
 });
 
 listen('click', settings, () => {
@@ -134,4 +137,9 @@ listen('click', settings, () => {
 listen('click', save, () => {
     createCookies();
     settingsDialog.close();
+    log(`1${getCookie('Browser')}`);
+    log(`2${getCookie('Operating System')}`);
+    log(`3${getCookie('Screen Width')}`);
+    log(`4${getCookie('Screen Height')}`);
 });
+
